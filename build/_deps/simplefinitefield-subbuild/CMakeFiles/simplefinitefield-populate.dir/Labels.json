@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/CMakeFiles/simplefinitefield-populate"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/CMakeFiles/simplefinitefield-populate.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/CMakeFiles/simplefinitefield-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-build.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-download.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-install.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-test.rule"
+		},
+		{
+			"file" : "/Users/nathan/Documents/github/EllipticCurve/build/_deps/simplefinitefield-subbuild/simplefinitefield-populate-prefix/src/simplefinitefield-populate-stamp/simplefinitefield-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"simplefinitefield-populate"
+		],
+		"name" : "simplefinitefield-populate"
+	}
+}

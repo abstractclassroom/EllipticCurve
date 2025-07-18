@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libfinite_field.a CMakeFiles/finite_field.dir/src/FiniteField.cpp.o CMakeFiles/finite_field.dir/src/FiniteField_Constructors.cpp.o CMakeFiles/finite_field.dir/src/FiniteField_Operators.cpp.o CMakeFiles/finite_field.dir/src/FiniteField_Utilities.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libfinite_field.a

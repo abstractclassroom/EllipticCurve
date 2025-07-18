@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libelliptic_curve.a CMakeFiles/elliptic_curve.dir/src/EllipticCurve.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libelliptic_curve.a
