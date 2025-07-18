@@ -1,5 +1,0 @@
-if(EXISTS "/Users/nathan/Documents/github/EllipticCurve/build/_deps/biginteger-build/integer_tests[1]_tests.cmake")
-  include("/Users/nathan/Documents/github/EllipticCurve/build/_deps/biginteger-build/integer_tests[1]_tests.cmake")
-else()
-  add_test(integer_tests_NOT_BUILT integer_tests_NOT_BUILT)
-endif()

@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libinteger_lib.a CMakeFiles/integer_lib.dir/src/Integer.cpp.o CMakeFiles/integer_lib.dir/src/Integer_Arithmetic.cpp.o CMakeFiles/integer_lib.dir/src/Integer_Utilities.cpp.o CMakeFiles/integer_lib.dir/src/Integer_Bitwise.cpp.o CMakeFiles/integer_lib.dir/src/Integer_Comparison.cpp.o CMakeFiles/integer_lib.dir/src/Integer_Modular.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libinteger_lib.a

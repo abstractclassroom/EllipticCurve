@@ -1,3 +1,0 @@
-/Users/nathan/Documents/github/EllipticCurve/build/_deps/biginteger-subbuild/CMakeFiles/biginteger-populate.dir
-/Users/nathan/Documents/github/EllipticCurve/build/_deps/biginteger-subbuild/CMakeFiles/edit_cache.dir
-/Users/nathan/Documents/github/EllipticCurve/build/_deps/biginteger-subbuild/CMakeFiles/rebuild_cache.dir
