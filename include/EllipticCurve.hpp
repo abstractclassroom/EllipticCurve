@@ -3,6 +3,7 @@
 
 #include "FiniteField.hpp"
 #include <iostream>
+#include <string>
 
 class EllipticCurve {
 public:
@@ -11,46 +12,38 @@ public:
     class Point {
     public:
         FieldElement x, y;
+        const EllipticCurve* curve;
         bool isInfinity;
 
-        Point() : x(FieldElement()), y(FieldElement()), isInfinity(true) {}
-    
+        Point(const FieldElement& x_, const FieldElement& y_, const EllipticCurve* c);
+        Point(bool inf, const EllipticCurve* c); // Constructor for point at infinity
+        Point(const EllipticCurve* c);           // Default infinity point constructor
 
-        Point(FieldElement x, FieldElement y, const EllipticCurve* c)
-            : x(x), y(y), curve(c), isInfinity(false) {}
-
-        bool operator==(const Point& other) const;
-        bool operator!=(const Point& other) const;
         Point operator+(const Point& other) const;
         Point& operator+=(const Point& other);
+        bool operator==(const Point& other) const;
+        bool operator!=(const Point& other) const;
         friend std::ostream& operator<<(std::ostream& os, const Point& p);
+
+        Point scalarMultiply(const Integer& k) const;
+
     };
 
-private:
-    Integer p_(0);
-    FieldElement a_, b_;
-    Point generator_;
+EllipticCurve(const FieldElement& a,const FieldElement& b);
 
-public:
-    EllipticCurve() : a_(0), b_(0), generator_() {}
 
-    EllipticCurve(const FieldElement& a, const FieldElement& b, const Point& generator);
+    Point createPoint(const FieldElement& x, const FieldElement& y) const;
+    bool is_on_curve(const Point& P) const;
+    std::string toString() const;
 
     // Getters
-    const FieldElement& a() const { return a_; }
-    const FieldElement& b() const { return b_; }
-    const Point& generator() const { return generator_; }
-    const Integer& p() const { return a_.getPrime(); }
+    const FieldElement& a() const;
+    const FieldElement& b() const;
+    const Integer& p() const;
 
-    // Setters
-    void setA(const FieldElement& a) { a_ = a; }
-    void setB(const FieldElement& b) { b_ = b; }
-    void setGenerator(const Point& g) {
-        generator_ = g;
-        generator_.curve = this;
-    }
-
-    bool is_on_curve(const Point& P) const;
+private:
+    const FiniteField* field_;
+    FieldElement a_, b_;
 };
 
 #endif // ELLIPTIC_CURVE_HPP
