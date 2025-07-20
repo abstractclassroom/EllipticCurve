@@ -1,11 +1,16 @@
 #include "EllipticCurve.hpp"
 #include <sstream>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
-// Constructor
+using json = nlohmann::json;
+using CurveParams = EllipticCurve::CurveRegistry::Params;
+
+// --- EllipticCurve Implementation ---
+
 EllipticCurve::EllipticCurve(const FieldElement& a, const FieldElement& b)
     : field_(a.field), a_(a), b_(b) {}
 
-// Create a point using the curve
 EllipticCurve::Point EllipticCurve::createPoint(const FieldElement& x, const FieldElement& y) const {
     Point p1(x, y, this);
     if (!is_on_curve(p1)) {
@@ -14,71 +19,11 @@ EllipticCurve::Point EllipticCurve::createPoint(const FieldElement& x, const Fie
     return p1;
 }
 
-// Check if point lies on the curve
 bool EllipticCurve::is_on_curve(const Point& P) const {
     if (P.isInfinity) return true;
     const auto& x = P.x;
     const auto& y = P.y;
     return y * y == x * x * x + a_ * x + b_;
-}
-
-
-// Point operations
-EllipticCurve::Point::Point(const FieldElement& x_, const FieldElement& y_, const EllipticCurve* c)
-    : x(x_), y(y_), curve(c), isInfinity(false) {}
-
-EllipticCurve::Point EllipticCurve::Point::operator+(const Point& other) const {
-    if (isInfinity) return other;
-    if (other.isInfinity) return *this;
-
-    const auto& p = *curve;
-
-    if (x == other.x && y != other.y) return Point(true, curve);
-
-    FieldElement s = (x == other.x && y == other.y)
-        ? (FieldElement(3, curve->field_) * x * x + curve->a_) / (FieldElement(2, curve->field_) * y)
-        : (other.y - y) / (other.x - x);
-
-    FieldElement x3 = s * s - x - other.x;
-    FieldElement y3 = s * (x - x3) - y;
-    return Point(x3, y3, curve);
-}
-
-EllipticCurve::Point& EllipticCurve::Point::operator+=(const Point& other) {
-    *this = *this + other;
-    return *this;
-}
-
-bool EllipticCurve::Point::operator==(const Point& other) const {
-    if (isInfinity && other.isInfinity) return true;
-    if (isInfinity || other.isInfinity) return false;
-    return x == other.x && y == other.y && curve == other.curve;
-}
-
-bool EllipticCurve::Point::operator!=(const Point& other) const {
-    return !(*this == other);
-}
-
-EllipticCurve::Point EllipticCurve::Point::scalarMultiply(const Integer& k) const {
-    Point result(true, curve);   //infinity point
-    Point addend = *this;
-    Integer n = k;
-
-    while (n != Integer(0)) {
-        if ((n & Integer(1)) != Integer(0)) {
-            result += addend;
-        }
-        addend += addend;  // Double the point
-        n >>= 1;           // Move to next bit
-    }
-
-    return result;
-}
-
-
-std::ostream& operator<<(std::ostream& os, const EllipticCurve::Point& p) {
-    if (p.isInfinity) return os << "Point(infinity)";
-    return os << "Point(" << p.x << ", " << p.y << ")";
 }
 
 std::string EllipticCurve::toString() const {
@@ -87,11 +32,49 @@ std::string EllipticCurve::toString() const {
     return oss.str();
 }
 
-// Private constructor for infinity point
-EllipticCurve::Point::Point(bool inf, const EllipticCurve* c)
-    : x(FieldElement(0, c->field_)), y(FieldElement(0, c->field_)), isInfinity(inf), curve(c) {}
+const EllipticCurve::FieldElement& EllipticCurve::getAParameter() const { return a_; }
+const EllipticCurve::FieldElement& EllipticCurve::getBParameter() const { return b_; }
+const Integer& EllipticCurve::getPrime() const { return field_->getPrime(); }
 
-// Getters
-const EllipticCurve::FieldElement& EllipticCurve::a() const { return a_; }
-const EllipticCurve::FieldElement& EllipticCurve::b() const { return b_; }
-const Integer& EllipticCurve::p() const { return field_->getPrime(); }
+std::ostream& operator<<(std::ostream& os, const EllipticCurve::Point& p) {
+    if (p.isInfinity) return os << "Point(infinity)";
+    return os << "Point(" << p.x << ", " << p.y << ")";
+}
+
+EllipticCurve EllipticCurve::fromID(const std::string& id) {
+    throw std::logic_error("Use CurveRegistry instance to load by ID instead of static fromID.");
+}
+
+// --- CurveRegistry (Nested Class) Implementation ---
+
+EllipticCurve::CurveRegistry::CurveRegistry(const std::string& path) {
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open curve registry file: " + path);
+    }
+
+    json j;
+    file >> j;
+
+    for (auto& [name, obj] : j.items()) {
+        curves_[name] = Params{
+            name,
+            obj["p"].get<std::string>(),
+            obj["a"].get<std::string>(),
+            obj["b"].get<std::string>(),
+            obj["gx"].get<std::string>(),
+            obj["gy"].get<std::string>(),
+            obj["n"].get<std::string>()
+        };
+    }
+}
+
+const EllipticCurve::CurveRegistry::Params& EllipticCurve::CurveRegistry::getParamsByID(const std::string& id) const {
+    auto it = curves_.find(id);
+    if (it == curves_.end()) throw std::invalid_argument("Curve not found: " + id);
+    return it->second;
+}
+
+const std::unordered_map<std::string, EllipticCurve::CurveRegistry::Params>& EllipticCurve::CurveRegistry::getAll() const {
+    return curves_;
+}

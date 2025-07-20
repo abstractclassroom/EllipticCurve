@@ -45,6 +45,9 @@ TEST(EllipticCurveTest, P256CurveScalarMultiplication) {
 
     // Scalar multiply
     EllipticCurve::Point P = G.scalarMultiply(Integer(1030));
+    std::cout << "G = " << G << std::endl;
+    std::cout << "G1030 = " << G1030 << std::endl;
+    std::cout << "P = " << P << std::endl;
 
     EXPECT_TRUE(P == G1030) << "Scalar multiplication by 1030 should match repeated addition";
 }
