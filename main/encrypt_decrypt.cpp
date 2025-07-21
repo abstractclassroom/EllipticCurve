@@ -9,7 +9,7 @@ int main() {
     auto b = field.element(params.b);
     auto gx = field.element(params.gx);
     auto gy = field.element(params.gy);
-    auto n = field.element(params.n);
+    // auto n = field.element(params.n);
     EllipticCurve curve(a, b);
     auto G = curve.createPoint(gx, gy);
 
